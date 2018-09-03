@@ -2,23 +2,28 @@ const express = require("express");
 const axios = require("axios");
 const db = require("../db");
 
-const router = express.Router();
-
 let lastFetch = null;
 
-router.get("/", fetchVersionsIfNeeded, getRecords);
-
-module.exports = router;
+module.exports = express.Router()
+  .get("/", fetchVersionsIfNeeded, getRecords);
 
 function fetchVersionsIfNeeded(req, res, next) {
   if (lastFetch === null || dateDiffInDays > 2) {
-    axios.get("https://api.github.com/repos/directus/app/releases")
-      .then(res => res.data)
-      .then(records => records.map(({ name, published_at, body }) => ({
-        version: name,
-        date: published_at,
-        info: body
-      })))
+    Promise.all([
+      axios.get("https://api.github.com/repos/directus/app/releases"),
+      axios.get("https://api.github.com/repos/directus/api/releases")
+    ])
+      .then(([appRes, apiRes]) => ({ app: appRes.data, api: apiRes.data }))
+      .then(({ app, api }) => {
+        const extractInfo = (array, repo) => array.map(({ name, published_at, body }) => ({
+          version: name,
+          date: published_at,
+          info: body,
+          repo
+        }));
+
+        return [...extractInfo(app, "app"), ...extractInfo(api, "api")];
+      })
       .then(records => {
         db
           .delete()
