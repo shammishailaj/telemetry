@@ -1,8 +1,6 @@
 # Version / Analytics server
 
-Small server that exposes a single endpoint that returns the latests GitHub releases. The application can use this to check if it's on the latest version.
-
-The server also saves incoming requests based on the hash of the app's URL (which makes it anonymous) so we have an idea of how many people are using Directus.
+Small centralized server that exposes two endpoints. One that allows clients to retrieve the latest releases from GitHub, the other that allows clients to send some info about the connected client.
 
 ## Installation
 
@@ -17,3 +15,45 @@ $ npm install
 Duplicate the `.env.example` to `.env` and add the values.
 
 Run the application by running `npm start`
+
+## Reference
+
+### Versions
+
+```http
+GET /versions
+```
+
+**Returns**\
+```js
+[
+  {
+    "version": String,     // eg v7.0.0
+    "date": String,        // ISO Date String eg 2018-08-22T22:08:54Z
+    "info": String,        // Markdown of GH Release
+    "repo": String         // api || app
+  }
+]
+```
+
+### Track
+
+```http
+POST /track
+```
+
+**Request body**\
+```json
+{
+  "api": {
+    "version": "v2.0.0-rc.2",
+    "url": "https://directus.app"
+  },
+  "app": {
+    "version": "v7.0.0-rc.2",
+    "url": "https://demo-api.directus.app"
+  }
+}
+```
+
+The URLs are stored in the database as a SHA256 hash.
