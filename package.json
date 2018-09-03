@@ -1,0 +1,21 @@
+{
+  "name": "@directus/version-analytics-server",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Small server that exposes a single endpoint that returns the latests GitHub releases. The application can use this to check if it's on the latest version.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/directus/version-analytics-server.git"
+  },
+  "keywords": [],
+  "author": "Rijk van Zanten <rijkvanzanten@me.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/directus/version-analytics-server/issues"
+  },
+  "homepage": "https://github.com/directus/version-analytics-server#readme"
+}
