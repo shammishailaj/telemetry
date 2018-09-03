@@ -24,7 +24,7 @@ Run the application by running `npm start`
 GET /versions
 ```
 
-**Returns**\
+**Returns**  
 ```js
 [
   {
@@ -42,7 +42,7 @@ GET /versions
 POST /track
 ```
 
-**Request body**\
+**Request body**  
 ```json
 {
   "api": {
