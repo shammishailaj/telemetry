@@ -43,7 +43,7 @@ function save(info) {
       if (record.length === 0) {
         db("instances")
           .insert(info)
-          .then(() => console.log(chalk`{green Added record of type} {bold ${info.type}} on version {blue ${info.version}}`))
+          .then(() => console.log(chalk`{green Added} record of type {bold ${info.type}} on version {blue ${info.version}}`))
           .catch(error => {
             console.error(error);
           });
