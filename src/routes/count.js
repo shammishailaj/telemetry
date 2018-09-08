@@ -36,7 +36,7 @@ function saveInstance(req, res) {
 
 function save(info) {
   db
-    .select("id")
+    .select(["id", "version"])
     .from("instances")
     .where("id", info.id)
     .andWhere("type", info.type)
@@ -49,6 +49,16 @@ function save(info) {
           .catch(error => {
             console.error(error);
           });
+      } else {
+        if (record[0].version !== info.version) {
+          db("instances")
+            .where("id", "=", info.id)
+            .update("version", info.version)
+            .then(() => console.log(chalk`{magenta Updated} record of type {bold ${info.type}} on version {blue ${info.version}}`))
+            .catch(error => {
+              console.error(error);
+            });
+        }
       }
     });
 }
