@@ -1,4 +1,4 @@
-# Version / Analytics server
+# Telemetry Server
 
 Small centralized server that exposes two endpoints. One that allows clients to retrieve the latest releases from GitHub, the other that allows clients to send anonymous metrics used to calculate Directus install count.
 
