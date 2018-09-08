@@ -5,7 +5,7 @@ const db = require("./db");
 module.exports = express()
   .disable("x-powered-by")
   .use("/count", require("./routes/count"))
-  .use("/", require("./routes/versions"))
+  .use("/versions", require("./routes/versions"))
   .use("*", notFound);
 
 function notFound(req, res) {
