@@ -4,8 +4,8 @@ const db = require("./db");
 
 module.exports = express()
   .disable("x-powered-by")
-  .use("/versions", require("./routes/versions"))
-  .use("/track", require("./routes/track"))
+  .use("/count", require("./routes/count"))
+  .use("/", require("./routes/versions"))
   .use("*", notFound);
 
 function notFound(req, res) {
