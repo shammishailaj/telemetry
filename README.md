@@ -20,6 +20,8 @@ Run the application by running `npm start`
 
 ### Versions
 
+Directus app and API versions are being pulled from GH releases on server start and after 2 days of "stale" versions.
+
 ```http
 GET /versions
 ```

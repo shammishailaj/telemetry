@@ -8,7 +8,7 @@ module.exports = express.Router()
   .get("/", fetchVersionsIfNeeded, getRecords);
 
 function fetchVersionsIfNeeded(req, res, next) {
-  if (lastFetch === null || dateDiffInDays > 2) {
+  if (lastFetch === null || dateDiffInDays(lastFetch || new Date(), new Date()) > 2) {
     Promise.all([
       axios.get("https://api.github.com/repos/directus/app/releases"),
       axios.get("https://api.github.com/repos/directus/api/releases")
@@ -29,6 +29,7 @@ function fetchVersionsIfNeeded(req, res, next) {
           .delete()
           .from("versions")
           .then(() => {
+            lastFetch = new Date();
             db("versions").insert(records).then(() => next());
           });
       })
