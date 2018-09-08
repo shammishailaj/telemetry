@@ -1,11 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const chalk = require("chalk");
 const hash = require("../hash");
 const db = require("../db");
 
 module.exports = express.Router()
   .use(bodyParser.json())
+  .use(cors())
   .post("/", hashUrl, saveInstance);
 
 function hashUrl(req, res, next) {
