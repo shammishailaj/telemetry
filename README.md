@@ -47,15 +47,12 @@ POST /count
 **Request body**  
 ```json
 {
-  "api": {
-    "version": "v2.0.0-rc.2",
-    "url": "https://directus.app"
-  },
-  "app": {
     "version": "v7.0.0-rc.2",
-    "url": "https://demo-api.directus.app"
-  }
+    "url": "https://demo-api.directus.app",
+    "type": "app"
 }
 ```
+
+(`type` is either `app` or `api`)
 
 The URLs are stored in the database as a SHA256 hash.
