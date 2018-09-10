@@ -11,26 +11,24 @@ module.exports = express.Router()
   .post("/", hashUrl, saveInstance);
 
 function hashUrl(req, res, next) {
-  res.locals.info = [
-    {
-      version: req.body.api.version,
-      id: hash(req.body.api.url),
-      type: "api",
-      created_on: (new Date()).toISOString()
-    },
-    {
-      version: req.body.app.version,
-      id: hash(req.body.app.url),
-      type: "app",
-      created_on: (new Date()).toISOString()
-    }
-  ];
+  if (
+    !req.body.url ||
+    !req.body.version ||
+    !req.body.type
+  ) return res.status(400).end();
+
+  res.locals.info = {
+    id: hash(req.body.url),
+    created_on: (new Date()).toISOString(),
+    type: req.body.type,
+    version: req.body.version
+  };
 
   next();
 }
 
 function saveInstance(req, res) {
-  res.locals.info.forEach(save);
+  save(res.locals.info);
   res.status(200).end();
 }
 
